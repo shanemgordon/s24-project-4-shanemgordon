@@ -68,7 +68,7 @@ void Simulation::run() {
         } else if (event->scheduling_decision->thread) {
             this->logger.print_verbose(event, event->scheduling_decision->thread, event->scheduling_decision->explanation);
         }
-
+        //cout << "Gabbagoo" << event->time << endl;
         this->system_stats.total_time = event->time;
         event.reset();
     }
@@ -216,7 +216,18 @@ SystemStats Simulation::calculate_statistics() {
             - cpu_utilization
             - cpu_efficiency  
     */
-    return this->system_stats;
+   //We have total time and dispatch time
+   //We have every process and their threads
+   for(auto& pair : processes){
+    Process thisProcess = *pair.second;
+    for(shared_ptr<Thread> t : thisProcess.threads){
+        Thread thisThread = *t;
+        system_stats.thread_counts[thisThread.priority]++;
+        system_stats.total_service_time += thisThread.service_time;
+        system_stats.total_io_time += thisThread.io_time;
+    }
+   }
+   return this->system_stats;
 }
 
 void Simulation::add_event(std::shared_ptr<Event> event) {

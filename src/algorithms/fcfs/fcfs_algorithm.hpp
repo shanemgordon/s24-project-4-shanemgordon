@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "algorithms/scheduling_algorithm.hpp"
-
+#include <queue>
 /*
     FCFSScheduler:
         A representation of a scheduling queue that uses first-come, first-served logic.
@@ -13,7 +13,7 @@
         You are free to add any member functions or member variables that you
         feel are helpful for implementing the algorithm.
 */
-
+using namespace std;
 class FCFSScheduler : public Scheduler {
 public:
 
@@ -21,7 +21,9 @@ public:
     //  Member variables
     //==================================================
 
-    // TODO: Add any member variables you may need.
+    //Storing pointers to threads will be significantly more effecient than copying them
+    queue<shared_ptr<Thread>> readyQueue = queue<shared_ptr<Thread>>();
+
 
     //==================================================
     //  Member functions
