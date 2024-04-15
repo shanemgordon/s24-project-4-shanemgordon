@@ -218,6 +218,7 @@ SystemStats Simulation::calculate_statistics() {
     */
    //We have total time and dispatch time
    //We have every process and their threads
+   int total_turnarounds[4];
    for(auto& pair : processes){
     Process thisProcess = *pair.second;
     for(shared_ptr<Thread> t : thisProcess.threads){
@@ -225,8 +226,14 @@ SystemStats Simulation::calculate_statistics() {
         system_stats.thread_counts[thisThread.priority]++;
         system_stats.total_service_time += thisThread.service_time;
         system_stats.total_io_time += thisThread.io_time;
+        total_turnarounds[thisThread.priority] += thisThread.end_time - thisThread.arrival_time;
     }
    }
+
+   for(int i : total_turnarounds){
+    this.total
+   }
+   this->system_stats.total_idle_time = system_stats.total_time - (system_stats.dispatch_time + system_stats.total_service_time);
    return this->system_stats;
 }
 
